@@ -9,9 +9,9 @@ const schema = mongoose.Schema({
     renewal_badges: { type: [String] },
     transfer_fee: { type: mongoose.SchemaTypes.Decimal128 },
     transfer_badges: { type: [String] },
+    is_active: { type: Boolean, default: true },
     currency: { type: String, default: "USD" },
     language: { type: String, default: "EN" },
-    is_active: { type: Boolean, default: true },
     date: { type: Date, required: true }
 }, {
     versionKey: false,
@@ -20,7 +20,18 @@ const schema = mongoose.Schema({
         updatedAt: "updated_at"
     }
 });
-class Prices extends mongoose.Model { }
+
+schema.index({ date: 1, company: 1, domain: 1 }, { unique: true });
+
+class Prices extends mongoose.Model {
+
+    static async getLastDate(query = {}) {
+        let price = await super.findOne(query).sort({ date: -1 });
+
+        return price.date;
+    }
+
+}
 
 schema.loadClass(Prices);
 module.exports = mongoose.model("prices", schema);

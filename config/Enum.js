@@ -4,7 +4,7 @@ module.exports = {
         "turhost": "https://turhost.com/domain/domain-sorgulama"
     },
     "CRAWLER_TYPES": {
-        "natro": "natro",
-        "turhost": "turhost"
+        "natro": "Natro",
+        "turhost": "Turhost"
     }
 }
